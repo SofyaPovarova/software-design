@@ -9,34 +9,26 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+import static ru.akirakozov.sd.refactoring.database.ProductDataBaseInteraction.SELECT_ALL_FROM_PRODUCT_TABLE;
+import static ru.akirakozov.sd.refactoring.database.ProductDataBaseInteraction.getResponseFromDataBase;
+
 /**
  * @author akirakozov
  */
 public class GetProductsServlet extends HttpServlet {
+    private String DB_URL;
+
+    public GetProductsServlet(String dbUrl) {
+        DB_URL = dbUrl;
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        try {
-            try (Connection c = DriverManager.getConnection("jdbc:sqlite:test.db")) {
-                Statement stmt = c.createStatement();
-                ResultSet rs = stmt.executeQuery("SELECT * FROM PRODUCT");
-                response.getWriter().println("<html><body>");
+        String res = getResponseFromDataBase(DB_URL, SELECT_ALL_FROM_PRODUCT_TABLE);
 
-                while (rs.next()) {
-                    String  name = rs.getString("name");
-                    int price  = rs.getInt("price");
-                    response.getWriter().println(name + "\t" + price + "</br>");
-                }
-                response.getWriter().println("</body></html>");
-
-                rs.close();
-                stmt.close();
-            }
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
+        response.getWriter().println("<html><body>");
+        response.getWriter().print(res);
+        response.getWriter().println("</body></html>");
         response.setContentType("text/html");
         response.setStatus(HttpServletResponse.SC_OK);
     }

@@ -8,27 +8,28 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 
+import static ru.akirakozov.sd.refactoring.database.ProductDataBaseInteraction.*;
+
 /**
  * @author akirakozov
  */
 public class AddProductServlet extends HttpServlet {
+    private String DB_URL;
+
+    public AddProductServlet(String dbUrl) {
+        DB_URL = dbUrl;
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String name = request.getParameter("name");
         long price = Long.parseLong(request.getParameter("price"));
 
-        try {
-            try (Connection c = DriverManager.getConnection("jdbc:sqlite:test.db")) {
-                String sql = "INSERT INTO PRODUCT " +
-                        "(NAME, PRICE) VALUES (\"" + name + "\"," + price + ")";
-                Statement stmt = c.createStatement();
-                stmt.executeUpdate(sql);
-                stmt.close();
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        executeOnDataBase(DB_URL, String.format(
+                ADD_TO_PRODUCT_TABLE,
+                name,
+                price
+        ));
 
         response.setContentType("text/html");
         response.setStatus(HttpServletResponse.SC_OK);
