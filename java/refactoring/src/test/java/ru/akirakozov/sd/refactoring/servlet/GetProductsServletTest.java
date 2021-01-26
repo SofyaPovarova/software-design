@@ -5,8 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static ru.akirakozov.sd.refactoring.servlet.ProductDataBaseUtils.*;
-import static ru.akirakozov.sd.refactoring.servlet.ProductHttpUtils.addProduct;
-import static ru.akirakozov.sd.refactoring.servlet.ProductHttpUtils.getProducts;
+import static ru.akirakozov.sd.refactoring.servlet.ProductHttpUtils.*;
 
 public class GetProductsServletTest {
     private final String dbUrl = "jdbc:sqlite:test.db";
@@ -22,7 +21,7 @@ public class GetProductsServletTest {
         String allProducts = "<html><body>\n" +
                 "</body></html>\n";
 
-        String res = getProducts();
+        String res = getResponse(GET_PRODUCTS_REQUEST);
         Assert.assertEquals(allProducts, res);
     }
 
@@ -33,7 +32,7 @@ public class GetProductsServletTest {
                 "passport\t1000000</br>\n" +
                 "</body></html>\n";
 
-        String res = getProducts();
+        String res = getResponse(GET_PRODUCTS_REQUEST);
         Assert.assertEquals(allProducts, res);
     }
 
@@ -49,7 +48,7 @@ public class GetProductsServletTest {
                 "drivingLicense\t500000</br>\n" +
                 "</body></html>\n";
 
-        String res = getProducts();
+        String res = getResponse(GET_PRODUCTS_REQUEST);
         Assert.assertEquals(allProducts, res);
     }
 }
