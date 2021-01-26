@@ -1,4 +1,4 @@
-package ru.akirakozov.sd.refactoring.servlet;
+package ru.akirakozov.sd.refactoring.servlet.utils;
 
 import java.net.URI;
 import java.net.http.HttpClient;

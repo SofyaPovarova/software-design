@@ -4,8 +4,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import static ru.akirakozov.sd.refactoring.servlet.ProductDataBaseUtils.*;
-import static ru.akirakozov.sd.refactoring.servlet.ProductHttpUtils.addProduct;
+import static ru.akirakozov.sd.refactoring.servlet.utils.ProductDataBaseUtils.*;
+import static ru.akirakozov.sd.refactoring.servlet.utils.ProductHttpUtils.addProduct;
 
 public class AddProductServletTest {
     private final String dbUrl = "jdbc:sqlite:test.db";

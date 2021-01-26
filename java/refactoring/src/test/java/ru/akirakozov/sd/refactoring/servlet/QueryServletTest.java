@@ -4,8 +4,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import static ru.akirakozov.sd.refactoring.servlet.ProductDataBaseUtils.*;
-import static ru.akirakozov.sd.refactoring.servlet.ProductHttpUtils.*;
+import static ru.akirakozov.sd.refactoring.servlet.utils.ProductDataBaseUtils.*;
+import static ru.akirakozov.sd.refactoring.servlet.utils.ProductHttpUtils.*;
 
 public class QueryServletTest {
     private final String dbUrl = "jdbc:sqlite:test.db";
@@ -153,6 +153,15 @@ public class QueryServletTest {
                 "</body></html>\n";
 
         String res = getResponse(GET_COUNT_REQUEST);
+        Assert.assertEquals(expectedResponse, res);
+    }
+
+    @Test
+    public void uncknownCommand() {
+        initWitThreeProducts();
+        String expectedResponse = "Unknown command: get-things-done\n";
+
+        String res = getResponse("http://localhost:8081/query?command=get-things-done");
         Assert.assertEquals(expectedResponse, res);
     }
 
