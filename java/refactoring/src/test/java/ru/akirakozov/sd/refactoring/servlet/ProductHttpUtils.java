@@ -9,6 +9,7 @@ public class ProductHttpUtils {
     private static final HttpClient httpClient = HttpClient.newHttpClient();
 
     private static final String ADD_PRODUCT_REQUEST = "http://localhost:8081/add-product?name=%s&price=%d";
+    private static final String GET_PRODUCTS_REQUEST = "http://localhost:8081/get-products";
 
     public static String addProduct(String name, int price) {
         HttpRequest request = HttpRequest.newBuilder()
@@ -28,6 +29,16 @@ public class ProductHttpUtils {
         return httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString())
                 .thenApply(HttpResponse::body)
                 .join();
+    }
+
+    public static String getProducts() {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(
+                        GET_PRODUCTS_REQUEST
+                ))
+                .build();
+
+        return getResponse(request);
     }
 
 }
