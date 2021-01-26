@@ -1,5 +1,7 @@
 package ru.akirakozov.sd.refactoring.servlet;
 
+import ru.akirakozov.sd.refactoring.utils.RequestParametersParser;
+
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,8 +24,8 @@ public class AddProductServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String name = request.getParameter("name");
-        long price = Long.parseLong(request.getParameter("price"));
+        String name = RequestParametersParser.parseName(request);
+        long price = RequestParametersParser.parsePrice(request);
 
         executeOnDataBase(DB_URL, String.format(
                 ADD_TO_PRODUCT_TABLE,
