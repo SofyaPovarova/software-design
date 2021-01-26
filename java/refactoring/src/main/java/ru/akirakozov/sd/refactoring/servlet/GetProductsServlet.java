@@ -16,7 +16,7 @@ import static ru.akirakozov.sd.refactoring.database.ProductDataBaseInteraction.g
  * @author akirakozov
  */
 public class GetProductsServlet extends HttpServlet {
-    private String DB_URL;
+    private final String DB_URL;
 
     public GetProductsServlet(String dbUrl) {
         DB_URL = dbUrl;
